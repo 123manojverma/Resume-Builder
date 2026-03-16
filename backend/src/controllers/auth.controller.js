@@ -1,6 +1,8 @@
 const bcrypt= require("bcryptjs");
 const userModel=require("../models/user.model")
 const jwt=require("jsonwebtoken")
+const tokenBlacklistModel = require("../models/blacklist.model")
+
 
 /**
  * @name SignUp
@@ -88,7 +90,47 @@ async function SignIn(req,res) {
     res.cookie("token",token)
 
     res.status(200).json({
-        message:"User sigin successfully",
+        message:"User signin successfully",
+        user:{
+            id:user._id,
+            username:user.username,
+            email:user.email
+        }
+    })
+}
+
+/**
+ * @name Logout
+ * @description clear token from user cookie and add the token in blacklist
+ * @access Public
+ */
+
+
+async function Logout(req,res){
+    const token=req.cookies.token
+
+    if(token){
+        await tokenBlacklistModel.create({token})
+    }
+
+    res.clearCookie("token")
+
+    res.status(200).json({
+        message:"User logged out successfully"
+    })
+}
+
+/**
+ * @name getMe
+ * @description get the current logged in user details.
+ * @access Private
+ */
+
+async function getMe(req,res){
+    const user=await userModel.findById(req.user.id)
+
+    res.status(200).json({
+        message:"User details fetched successfully",
         user:{
             id:user._id,
             username:user.username,
@@ -99,5 +141,7 @@ async function SignIn(req,res) {
 
 module.exports={
     SignUp,
-    SignIn
+    SignIn,
+    Logout,
+    getMe
 }
