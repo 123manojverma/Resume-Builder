@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ResumeBuilder - Craft Your Professional Story",
-  description: "Create premium, modern resumes with ease.",
+  title: "ResumeBuilder AI — Land Your Dream Job",
+  description: "Generate ATS-optimized, AI-tailored resumes and interview prep in seconds. Built for modern professionals.",
 };
 
 export default function RootLayout({
@@ -24,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50 pt-16 min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0b] text-zinc-50 pt-16 min-h-screen flex flex-col`}
       >
         <Navbar />
         <main className="flex-1 flex flex-col">
